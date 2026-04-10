@@ -10,7 +10,7 @@ This repository provides an example of how to integrate **PIOPIY SIP Trunks** wi
 
 ## Prerequisites
 - [LiveKit Cloud](https://cloud.livekit.io/) account.
-- [PIOPIY](https://www.telecmi.com/piopiy) SIP Trunk credentials.
+- [PIOPIY](https://dashboard.piopiy.com) SIP Trunk credentials.
 - OpenAI API Key.
 - Deepgram API Key.
 
