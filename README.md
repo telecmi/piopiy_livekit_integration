@@ -1,18 +1,17 @@
 # PIOPIY SIP Trunk with LiveKit Cloud Agent
 
-This repository provides an example of how to integrate **PIOPIY SIP Trunks** with **LiveKit Cloud Agents** to create AI-powered voice assistants that can handle outbound PSTN calls.
+This repository provides an example of how to integrate **PIOPIY SIP Trunks** with **LiveKit Cloud Agents** (Voice Pipeline) to create AI-powered voice assistants that can handle outbound PSTN calls.
 
 ## Features
 - **Outbound Calling**: Automatically initiate calls to any phone number using PIOPIY SIP Trunks.
-- **AI Voice Agent**: A Python-based LiveKit agent using OpenAI (LLM/TTS) and Deepgram (STT).
+- **Cloud-Hosted Agent**: Managed via LiveKit Cloud Dashboard (No local worker required).
 - **SIP Participant Integration**: Modern LiveKit SIP API usage to connect telephony with WebRTC rooms.
-- **Room Dispatch**: Automatically dispatches the agent to the room when the call starts.
+- **Room Dispatch**: Automatically dispatches your pre-configured Cloud Agent to the room when the call starts.
 
 ## Prerequisites
 - [LiveKit Cloud](https://cloud.livekit.io/) account.
 - [PIOPIY](https://dashboard.piopiy.com) SIP Trunk credentials.
-- OpenAI API Key.
-- Deepgram API Key.
+- A **Voice Pipeline Agent** created in the LiveKit Cloud dashboard.
 
 ## Setup
 
@@ -38,24 +37,23 @@ This repository provides an example of how to integrate **PIOPIY SIP Trunks** wi
    ```bash
    cp .env.example .env
    ```
+   > [!IMPORTANT] 
+   > Ensure the `AGENT_NAME` matches the name of the agent you created in the LiveKit Cloud UI.
 
 ## Usage
 
-### 1. Start the Agent
-The agent needs to be running to handle the voice interaction.
-```bash
-python3 agent.py dev
-```
+### 1. Configure your Agent in UI
+Go to your [LiveKit Cloud Dashboard](https://cloud.livekit.io/), navigate to **Agents**, and create a new **Voice Pipeline** agent. This allows you to configure instructions, LLM, and voice settings without managing any local code.
 
 ### 2. Initiate an Outbound Call
-Run the call script to connect a phone number to your agent.
+Run the call script to connect a phone number to your Cloud Agent.
 ```bash
 python3 call.py
 ```
 
 ## How it works
-1. **`agent.py`**: Defines the LiveKit worker that listens for jobs. It uses Silero for VAD, Deepgram for STT, and OpenAI for LLM/TTS.
-2. **`call.py`**: Uses the LiveKit API to:
+1. **`call.py`**: Uses the LiveKit API to:
    - Create a room.
-   - Dispatch the agent to that room.
+   - **Dispatch** your Cloud-hosted agent to that room by name.
    - Initiate a SIP call through the PIOPIY trunk and join it to the room as a participant.
+2. The agent handles the audio processing (STT, LLM, TTS) entirely in the cloud, requiring zero local compute or complex worker infrastructure.

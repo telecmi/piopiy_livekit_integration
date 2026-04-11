@@ -19,7 +19,8 @@ async def main():
     print(f"🚀 Initiating outbound call to {to_number} in room {room_name}")
 
     # 1. Dispatch the agent to the room first
-    # This ensures the agent is waiting when the phone is answered.
+    # Since you created the agent in the LiveKit UI, this command tells 
+    # LiveKit Cloud to send that agent into the room.
     try:
         dispatch = await livekit_api.agent_dispatch.create_dispatch(
             api.CreateAgentDispatchRequest(
@@ -27,10 +28,10 @@ async def main():
                 room=room_name,
             )
         )
-        print(f"✅ Agent dispatched (ID: {dispatch.id})")
+        print(f"✅ Cloud Agent '{agent_name}' dispatched (ID: {dispatch.id})")
     except Exception as e:
         print(f"⚠️ Agent dispatch failed: {e}")
-        # We continue anyway, as maybe the agent is set to auto-dispatch
+        print("   Make sure the Agent Name in the UI matches AGENT_NAME in .env")
 
     # 2. Create the SIP participant
     try:
